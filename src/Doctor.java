@@ -11,7 +11,6 @@ public class Doctor {
         this.available = true;
     }
 
-    // getters & setters
     public int getId() {
         return id;
     }

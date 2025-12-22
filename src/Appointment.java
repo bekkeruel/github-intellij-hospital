@@ -13,7 +13,6 @@ public class Appointment {
         this.status = "Scheduled";
     }
 
-    // getters & setters
     public int getId() {
         return id;
     }
@@ -54,7 +53,6 @@ public class Appointment {
         this.status = status;
     }
 
-    // logic methods
     public void startAppointment() {
         if (doctor.isAvailable()) {
             doctor.assignAppointment();

@@ -11,7 +11,6 @@ public class Patient {
         this.phone = phone;
     }
 
-    // getters & setters
     public int getId() {
         return id;
     }

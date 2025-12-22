@@ -28,5 +28,6 @@ public class Main {
 
         appointment.completeAppointment();
         System.out.println("Status: " + appointment.getStatus());
+
     }
 }

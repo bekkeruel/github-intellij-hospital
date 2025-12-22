@@ -43,7 +43,7 @@ public class Patient {
         this.phone = phone;
     }
 
-    // logic methods
+
     public void updatePhone(String newPhone) {
         phone = newPhone;
     }

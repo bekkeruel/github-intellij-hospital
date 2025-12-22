@@ -3,7 +3,6 @@ public class Patient {
     private String fullName;
     private int age;
     private String phone;
-    private MedicalRecord medicalRecord;
 
     public Patient(int id, String fullName, int age, String phone) {
         this.id = id;
@@ -12,15 +11,45 @@ public class Patient {
         this.phone = phone;
     }
 
+    // getters & setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFullName() {
         return fullName;
     }
 
-    public void setMedicalRecord(MedicalRecord medicalRecord) {
-        this.medicalRecord = medicalRecord;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    // logic methods
+    public void updatePhone(String newPhone) {
+        phone = newPhone;
     }
 
     public void displayInfo() {
-        System.out.println("Patient: " + fullName + ", Age: " + age + ", Phone: " + phone);
+        System.out.println("Patient: " + fullName + ", Age: " + age);
     }
 }

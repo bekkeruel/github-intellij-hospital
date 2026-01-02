@@ -1,32 +1,15 @@
-public class Doctor {
-    private int id;
-    private String fullName;
+public class Doctor extends Person {
     private String specialization;
-    private boolean available;
+    private int experienceYears;
 
-    public Doctor(int id, String fullName, String specialization) {
-        this.id = id;
-        this.fullName = fullName;
+    public Doctor(int id, String name, int age, String phone,
+                  String specialization, int experienceYears) {
+        super(id, name, age, phone);
         this.specialization = specialization;
-        this.available = true;
+        this.experienceYears = experienceYears;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
+    // getters & setters
     public String getSpecialization() {
         return specialization;
     }
@@ -35,21 +18,31 @@ public class Doctor {
         this.specialization = specialization;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public int getExperienceYears() {
+        return experienceYears;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setExperienceYears(int experienceYears) {
+        this.experienceYears = experienceYears;
     }
 
-    // logic methods
-    public void assignAppointment() {
-        available = false;
+    // overridden methods
+    @Override
+    public void work() {
+        System.out.println("Doctor " + name + " is treating patients.");
     }
 
-    public void finishAppointment() {
-        available = true;
+    @Override
+    public String getRole() {
+        return "Doctor";
+    }
+
+    // unique methods
+    public void treatPatient() {
+        System.out.println("Doctor " + name + " treats a patient.");
+    }
+
+    public boolean isExperienced() {
+        return experienceYears >= 5;
     }
 }
-

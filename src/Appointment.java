@@ -1,5 +1,4 @@
 public class Appointment {
-
     private Doctor doctor;
     private Patient patient;
     private String date;
@@ -12,7 +11,6 @@ public class Appointment {
         this.status = "Scheduled";
     }
 
-    // getters & setters
     public Doctor getDoctor() {
         return doctor;
     }
@@ -41,7 +39,6 @@ public class Appointment {
         return status;
     }
 
-    // logic methods
     public void completeAppointment() {
         status = "Completed";
     }

@@ -10,35 +10,11 @@ public class Doctor extends Person {
         this.experienceYears = experienceYears;
     }
 
-    // getters & setters
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
-    public int getExperienceYears() {
-        return experienceYears;
-    }
-
-    public void setExperienceYears(int experienceYears) {
-        this.experienceYears = experienceYears;
-    }
-
-    // overridden methods
     @Override
     public void work() {
         System.out.println("Doctor " + name + " is treating patients.");
     }
 
-    @Override
-    public String getRole() {
-        return "Doctor";
-    }
-
-    // logic methods
     public void treatPatient() {
         System.out.println("Doctor " + name + " treats a patient.");
     }

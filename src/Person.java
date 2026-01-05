@@ -6,18 +6,20 @@ public class Person {
     protected String phone;
 
     public Person(int id, String name, int age, String phone) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.phone = phone;
+        setId(id);
+        setName(name);
+        setAge(age);
+        setPhone(phone);
     }
 
-    // getters & setters
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be positive");
+        }
         this.id = id;
     }
 
@@ -26,6 +28,9 @@ public class Person {
     }
 
     public void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
         this.name = name;
     }
 
@@ -34,6 +39,9 @@ public class Person {
     }
 
     public void setAge(int age) {
+        if (age < 0) {
+            throw new IllegalArgumentException("Age cannot be negative");
+        }
         this.age = age;
     }
 
@@ -42,10 +50,12 @@ public class Person {
     }
 
     public void setPhone(String phone) {
+        if (phone == null || phone.isEmpty()) {
+            throw new IllegalArgumentException("Phone cannot be empty");
+        }
         this.phone = phone;
     }
 
-    // methods for polymorphism
     public void work() {
         System.out.println("Person is working.");
     }

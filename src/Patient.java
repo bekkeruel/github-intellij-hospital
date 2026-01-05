@@ -6,17 +6,20 @@ public class Patient extends Person {
     public Patient(int id, String name, int age, String phone,
                    String diagnosis, boolean admitted) {
         super(id, name, age, phone);
-        this.diagnosis = diagnosis;
+        setDiagnosis(diagnosis);
         this.admitted = admitted;
     }
 
-    // getters & setters
-    public String getDiagnosis() {
-        return diagnosis;
+    // validation
+    public void setDiagnosis(String diagnosis) {
+        if (diagnosis == null || diagnosis.isEmpty()) {
+            throw new IllegalArgumentException("Diagnosis cannot be empty");
+        }
+        this.diagnosis = diagnosis;
     }
 
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
+    public String getDiagnosis() {
+        return diagnosis;
     }
 
     public boolean isAdmitted() {
@@ -27,18 +30,13 @@ public class Patient extends Person {
         this.admitted = admitted;
     }
 
-    // overridden methods
+    // override
     @Override
     public void work() {
         System.out.println("Patient " + name + " is receiving treatment.");
     }
 
-    @Override
-    public String getRole() {
-        return "Patient";
-    }
-
-    // logic methods
+    // 🔥 ВАЖНЫЙ МЕТОД (ИМЕННО ОН)
     public void showDiagnosis() {
         System.out.println("Diagnosis: " + diagnosis);
     }

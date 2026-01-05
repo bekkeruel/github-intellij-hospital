@@ -5,26 +5,31 @@ public class Main {
 
         ArrayList<Person> people = new ArrayList<>();
 
-        Doctor doctor = new Doctor(
-                1,
-                "Askar",
-                45,
-                "87770001122",
-                "Therapist",
-                10
-        );
+        try {
+            Doctor doctor = new Doctor(
+                    1,
+                    "Askar",
+                    45,
+                    "87770001122",
+                    "Therapist",
+                    10
+            );
 
-        Patient patient = new Patient(
-                2,
-                "Aruzhan",
-                20,
-                "87015554433",
-                "Flu",
-                true
-        );
+            Patient patient = new Patient(
+                    2,
+                    "Aruzhan",
+                    20,
+                    "87015554433",
+                    "Flu",
+                    true
+            );
 
-        people.add(doctor);
-        people.add(patient);
+            people.add(doctor);
+            people.add(patient);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Validation error: " + e.getMessage());
+        }
 
         System.out.println("=== POLYMORPHISM ===");
         for (Person p : people) {
@@ -43,14 +48,5 @@ public class Main {
                 pat.showDiagnosis();
             }
         }
-
-        Appointment appointment = new Appointment(
-                doctor,
-                patient,
-                "2026-01-05"
-        );
-
-        appointment.completeAppointment();
-        System.out.println("\nAppointment completed: " + appointment.isCompleted());
     }
 }

@@ -41,6 +41,8 @@ public class Main {
         for (Person p : people) {
             if (p instanceof Doctor) {
                 Doctor d = (Doctor) p;
+
+
                 d.treatPatient();
                 System.out.println("Experienced: " + d.isExperienced());
             } else if (p instanceof Patient) {

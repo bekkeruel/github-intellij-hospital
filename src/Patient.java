@@ -1,18 +1,30 @@
 public class Patient extends Person {
-    private String diagnosis;
 
-    public Patient(int id, String name, int age, String phone, String diagnosis) {
-        super(id, name, age, phone); // super — ПЕРВАЯ СТРОКА
+    private String diagnosis;
+    private boolean admitted;
+
+    public Patient(int id, String name, int age, String phone,
+                   String diagnosis, boolean admitted) {
+        super(id, name, age, phone);
         this.diagnosis = diagnosis;
+        this.admitted = admitted;
     }
 
-    // getter & setter
+    // getters & setters
     public String getDiagnosis() {
         return diagnosis;
     }
 
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
+    }
+
+    public boolean isAdmitted() {
+        return admitted;
+    }
+
+    public void setAdmitted(boolean admitted) {
+        this.admitted = admitted;
     }
 
     // overridden methods
@@ -26,7 +38,7 @@ public class Patient extends Person {
         return "Patient";
     }
 
-    // unique methods
+    // logic methods
     public void showDiagnosis() {
         System.out.println("Diagnosis: " + diagnosis);
     }

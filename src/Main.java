@@ -5,41 +5,34 @@ public class Main {
 
         ArrayList<Person> people = new ArrayList<>();
 
-        // parent object
-        people.add(new Person(
+        Doctor doctor = new Doctor(
                 1,
-                "Alex",
-                30,
-                "+77000000001"
-        ));
-
-        // child objects (POLYMORPHISM)
-        people.add(new Patient(
-                2,
-                "Aruzhan",
-                21,
-                "+77001112233",
-                "Flu"
-        ));
-
-        people.add(new Doctor(
-                3,
-                "Dr. Askar",
+                "Askar",
                 45,
-                "+77009998877",
+                "87770001122",
                 "Therapist",
                 10
-        ));
+        );
 
-        // POLYMORPHIC BEHAVIOR
-        System.out.println("=== POLYMORPHISM DEMO ===");
+        Patient patient = new Patient(
+                2,
+                "Aruzhan",
+                20,
+                "87015554433",
+                "Flu",
+                true
+        );
+
+        people.add(doctor);
+        people.add(patient);
+
+        System.out.println("=== POLYMORPHISM ===");
         for (Person p : people) {
             System.out.println(p.getRole());
-            p.work(); // same method, different behavior
+            p.work();
         }
 
-        // instanceof + downcasting
-        System.out.println("\n=== INSTANCEOF DEMO ===");
+        System.out.println("\n=== INSTANCEOF ===");
         for (Person p : people) {
             if (p instanceof Doctor) {
                 Doctor d = (Doctor) p;
@@ -50,5 +43,14 @@ public class Main {
                 pat.showDiagnosis();
             }
         }
+
+        Appointment appointment = new Appointment(
+                doctor,
+                patient,
+                "2026-01-05"
+        );
+
+        appointment.completeAppointment();
+        System.out.println("\nAppointment completed: " + appointment.isCompleted());
     }
 }

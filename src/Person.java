@@ -1,4 +1,5 @@
 public class Person {
+
     protected int id;
     protected String name;
     protected int age;
@@ -11,6 +12,7 @@ public class Person {
         this.phone = phone;
     }
 
+    // getters & setters
     public int getId() {
         return id;
     }
@@ -43,8 +45,9 @@ public class Person {
         this.phone = phone;
     }
 
+    // methods for polymorphism
     public void work() {
-        System.out.println(name + " is doing something.");
+        System.out.println("Person is working.");
     }
 
     public String getRole() {

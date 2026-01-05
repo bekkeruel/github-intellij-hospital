@@ -1,4 +1,5 @@
 public class Doctor extends Person {
+
     private String specialization;
     private int experienceYears;
 
@@ -37,7 +38,7 @@ public class Doctor extends Person {
         return "Doctor";
     }
 
-    // unique methods
+    // logic methods
     public void treatPatient() {
         System.out.println("Doctor " + name + " treats a patient.");
     }

@@ -1,9 +1,13 @@
+package model;
+
+import exceptions.ValidationException;
+
 public class Doctor extends Person {
     private String specialization;
     private int experienceYears;
 
     public Doctor(int id, String name, int age, String phone,
-                  String specialization, int experienceYears) {
+                  String specialization, int experienceYears) throws ValidationException {
         super(id, name, age, phone);
         setSpecialization(specialization);
         setExperienceYears(experienceYears);
@@ -13,9 +17,9 @@ public class Doctor extends Person {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(String specialization) throws ValidationException {
         if (specialization == null || specialization.isEmpty()) {
-            throw new IllegalArgumentException("Specialization cannot be empty");
+            throw new ValidationException("Specialization cannot be empty");
         }
         this.specialization = specialization;
     }
@@ -24,9 +28,9 @@ public class Doctor extends Person {
         return experienceYears;
     }
 
-    public void setExperienceYears(int experienceYears) {
+    public void setExperienceYears(int experienceYears) throws ValidationException {
         if (experienceYears < 0) {
-            throw new IllegalArgumentException("Experience cannot be negative");
+            throw new ValidationException("Experience cannot be negative");
         }
         this.experienceYears = experienceYears;
     }
@@ -39,6 +43,12 @@ public class Doctor extends Person {
     @Override
     public String getRole() {
         return "Doctor (" + specialization + ")";
+    }
+
+    @Override
+    public String getDetails() {
+        return "Doctor: " + name + ", Specialization: " + specialization +
+                ", Experience: " + experienceYears + " years";
     }
 
     public void treatPatient() {

@@ -1,47 +1,63 @@
+package menu;
+
+import model.*;
+import exceptions.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ConsoleMenu {
+public class MenuManager implements menu.Menu {
     private static ArrayList<Person> people = new ArrayList<>();
     private static ArrayList<Appointment> appointments = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    @Override
+    public void displayMenu() {
+        System.out.println("\n=== HOSPITAL MANAGEMENT SYSTEM ===");
+        System.out.println("1. Add Doctor");
+        System.out.println("2. Add Patient");
+        System.out.println("3. Add Appointment");
+        System.out.println("4. View All People");
+        System.out.println("5. Demonstrate Polymorphism");
+        System.out.println("6. Show Specific Information");
+        System.out.println("7. View All Appointments");
+        System.out.println("8. Exit");
+        System.out.print("Choose an option: ");
+    }
+
+    @Override
+    public void run() {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n=== HOSPITAL MANAGEMENT SYSTEM ===");
-            System.out.println("1. Add Doctor");
-            System.out.println("2. Add Patient");
-            System.out.println("3. Add Appointment");
-            System.out.println("4. View All People");
-            System.out.println("5. Demonstrate Polymorphism");
-            System.out.println("6. Show Specific Information");
-            System.out.println("7. View All Appointments");
-            System.out.println("8. Exit");
-            System.out.print("Choose an option: ");
+            displayMenu();
 
-            int choice = getIntInput();
+            try {
+                int choice = getIntInput();
 
-            switch (choice) {
-                case 1 -> addDoctor();
-                case 2 -> addPatient();
-                case 3 -> addAppointment();
-                case 4 -> viewAllPeople();
-                case 5 -> demonstratePolymorphism();
-                case 6 -> showSpecificInfo();
-                case 7 -> viewAllAppointments();
-                case 8 -> {
-                    System.out.println("Exiting... Goodbye!");
-                    running = false;
+                switch (choice) {
+                    case 1 -> addDoctor();
+                    case 2 -> addPatient();
+                    case 3 -> addAppointment();
+                    case 4 -> viewAllPeople();
+                    case 5 -> demonstratePolymorphism();
+                    case 6 -> showSpecificInfo();
+                    case 7 -> viewAllAppointments();
+                    case 8 -> {
+                        System.out.println("Exiting... Goodbye!");
+                        running = false;
+                    }
+                    default -> System.out.println("Invalid option! Please try again.");
                 }
-                default -> System.out.println("Invalid option! Please try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("❌ Error: Invalid number format");
+            } catch (Exception e) {
+                System.out.println("❌ Unexpected error: " + e.getMessage());
             }
         }
         scanner.close();
     }
 
-    private static void addDoctor() {
+    private void addDoctor() {
         System.out.println("\n=== ADD NEW DOCTOR ===");
         try {
             System.out.print("ID: ");
@@ -66,12 +82,14 @@ public class ConsoleMenu {
             people.add(doctor);
             System.out.println("✅ Doctor added successfully!");
 
-        } catch (IllegalArgumentException e) {
+        } catch (ValidationException e) {
+            System.out.println("❌ Validation Error: " + e.getMessage());
+        } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
         }
     }
 
-    private static void addPatient() {
+    private void addPatient() {
         System.out.println("\n=== ADD NEW PATIENT ===");
         try {
             System.out.print("ID: ");
@@ -96,12 +114,14 @@ public class ConsoleMenu {
             people.add(patient);
             System.out.println("✅ Patient added successfully!");
 
+        } catch (ValidationException e) {
+            System.out.println("❌ Validation Error: " + e.getMessage());
         } catch (IllegalArgumentException e) {
-            System.out.println("❌ Error: " + e.getMessage());
+            System.out.println("❌ Error: Invalid boolean value");
         }
     }
 
-    private static void addAppointment() {
+    private void addAppointment() {
         System.out.println("\n=== ADD NEW APPOINTMENT ===");
 
         if (people.isEmpty()) {
@@ -109,71 +129,74 @@ public class ConsoleMenu {
             return;
         }
 
-        // Show available doctors
-        System.out.println("Available Doctors:");
-        int doctorIndex = 1;
-        ArrayList<Doctor> doctors = new ArrayList<>();
-        for (Person p : people) {
-            if (p instanceof Doctor) {
-                Doctor d = (Doctor) p;
-                System.out.println(doctorIndex + ". Dr. " + d.getName() +
-                        " - " + d.getSpecialization() +
-                        " [EXP: " + d.getExperienceYears() + " years]");
-                doctors.add(d);
-                doctorIndex++;
+        try {
+            // Show available doctors
+            System.out.println("Available Doctors:");
+            int doctorIndex = 1;
+            ArrayList<Doctor> doctors = new ArrayList<>();
+            for (Person p : people) {
+                if (p instanceof Doctor) {
+                    Doctor d = (Doctor) p;
+                    System.out.println(doctorIndex + ". Dr. " + d.getName() +
+                            " - " + d.getSpecialization() +
+                            " [EXP: " + d.getExperienceYears() + " years]");
+                    doctors.add(d);
+                    doctorIndex++;
+                }
             }
-        }
 
-        if (doctors.isEmpty()) {
-            System.out.println("❌ No doctors available. Please add a doctor first.");
-            return;
-        }
-
-        System.out.print("Select doctor (number): ");
-        int docChoice = getIntInput();
-        if (docChoice < 1 || docChoice > doctors.size()) {
-            System.out.println("❌ Invalid doctor selection.");
-            return;
-        }
-        Doctor selectedDoctor = doctors.get(docChoice - 1);
-
-        // Show available patients
-        System.out.println("\nAvailable Patients:");
-        int patientIndex = 1;
-        ArrayList<Patient> patients = new ArrayList<>();
-        for (Person p : people) {
-            if (p instanceof Patient) {
-                Patient pat = (Patient) p;
-                System.out.println(patientIndex + ". " + pat.getName() +
-                        " - Diagnosis: " + pat.getDiagnosis() +
-                        " [Admitted: " + pat.isAdmitted() + "]");
-                patients.add(pat);
-                patientIndex++;
+            if (doctors.isEmpty()) {
+                System.out.println("❌ No doctors available. Please add a doctor first.");
+                return;
             }
+
+            System.out.print("Select doctor (number): ");
+            int docChoice = getIntInput();
+            if (docChoice < 1 || docChoice > doctors.size()) {
+                throw new ValidationException("Invalid doctor selection");
+            }
+            Doctor selectedDoctor = doctors.get(docChoice - 1);
+
+            // Show available patients
+            System.out.println("\nAvailable Patients:");
+            int patientIndex = 1;
+            ArrayList<Patient> patients = new ArrayList<>();
+            for (Person p : people) {
+                if (p instanceof Patient) {
+                    Patient pat = (Patient) p;
+                    System.out.println(patientIndex + ". " + pat.getName() +
+                            " - Diagnosis: " + pat.getDiagnosis() +
+                            " [Admitted: " + pat.isAdmitted() + "]");
+                    patients.add(pat);
+                    patientIndex++;
+                }
+            }
+
+            if (patients.isEmpty()) {
+                System.out.println("❌ No patients available. Please add a patient first.");
+                return;
+            }
+
+            System.out.print("Select patient (number): ");
+            int patChoice = getIntInput();
+            if (patChoice < 1 || patChoice > patients.size()) {
+                throw new ValidationException("Invalid patient selection");
+            }
+            Patient selectedPatient = patients.get(patChoice - 1);
+
+            System.out.print("Appointment Date (e.g., 2024-01-15): ");
+            String date = scanner.nextLine();
+
+            Appointment appointment = new Appointment(selectedDoctor, selectedPatient, date);
+            appointments.add(appointment);
+            System.out.println("✅ Appointment scheduled successfully!");
+
+        } catch (ValidationException e) {
+            System.out.println("❌ Error: " + e.getMessage());
         }
-
-        if (patients.isEmpty()) {
-            System.out.println("❌ No patients available. Please add a patient first.");
-            return;
-        }
-
-        System.out.print("Select patient (number): ");
-        int patChoice = getIntInput();
-        if (patChoice < 1 || patChoice > patients.size()) {
-            System.out.println("❌ Invalid patient selection.");
-            return;
-        }
-        Patient selectedPatient = patients.get(patChoice - 1);
-
-        System.out.print("Appointment Date (e.g., 2024-01-15): ");
-        String date = scanner.nextLine();
-
-        Appointment appointment = new Appointment(selectedDoctor, selectedPatient, date);
-        appointments.add(appointment);
-        System.out.println("✅ Appointment scheduled successfully!");
     }
 
-    private static void viewAllPeople() {
+    private void viewAllPeople() {
         System.out.println("\n=== ALL PEOPLE ===");
         if (people.isEmpty()) {
             System.out.println("No people in the system.");
@@ -194,10 +217,11 @@ public class ConsoleMenu {
 
             System.out.println((i + 1) + ". " + typeBadge + " " + p.getName() +
                     " (ID: " + p.getId() + ", Age: " + p.getAge() + ")");
+            System.out.println("   Details: " + p.getDetails());
         }
     }
 
-    private static void demonstratePolymorphism() {
+    private void demonstratePolymorphism() {
         System.out.println("\n=== DEMONSTRATING POLYMORPHISM ===");
         if (people.isEmpty()) {
             System.out.println("No people in the system.");
@@ -212,7 +236,7 @@ public class ConsoleMenu {
         }
     }
 
-    private static void showSpecificInfo() {
+    private void showSpecificInfo() {
         System.out.println("\n=== SPECIFIC INFORMATION (using instanceof) ===");
         if (people.isEmpty()) {
             System.out.println("No people in the system.");
@@ -247,7 +271,7 @@ public class ConsoleMenu {
         }
     }
 
-    private static void viewAllAppointments() {
+    private void viewAllAppointments() {
         System.out.println("\n=== ALL APPOINTMENTS ===");
         if (appointments.isEmpty()) {
             System.out.println("No appointments scheduled.");
@@ -267,7 +291,7 @@ public class ConsoleMenu {
         }
     }
 
-    private static int getIntInput() {
+    private int getIntInput() {
         while (true) {
             try {
                 return Integer.parseInt(scanner.nextLine());

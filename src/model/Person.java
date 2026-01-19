@@ -1,10 +1,14 @@
-public class Person {
+package model;
+
+import exceptions.ValidationException;
+
+public abstract class Person {
     protected int id;
     protected String name;
     protected int age;
     protected String phone;
 
-    public Person(int id, String name, int age, String phone) {
+    public Person(int id, String name, int age, String phone) throws ValidationException {
         setId(id);
         setName(name);
         setAge(age);
@@ -15,9 +19,9 @@ public class Person {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id) throws ValidationException {
         if (id <= 0) {
-            throw new IllegalArgumentException("ID must be positive");
+            throw new ValidationException("ID must be positive");
         }
         this.id = id;
     }
@@ -26,9 +30,9 @@ public class Person {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws ValidationException {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be empty");
+            throw new ValidationException("Name cannot be empty");
         }
         this.name = name;
     }
@@ -37,9 +41,9 @@ public class Person {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(int age) throws ValidationException {
         if (age < 0) {
-            throw new IllegalArgumentException("Age cannot be negative");
+            throw new ValidationException("Age cannot be negative");
         }
         this.age = age;
     }
@@ -48,9 +52,9 @@ public class Person {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(String phone) throws ValidationException {
         if (phone == null || phone.isEmpty()) {
-            throw new IllegalArgumentException("Phone cannot be empty");
+            throw new ValidationException("Phone cannot be empty");
         }
         this.phone = phone;
     }
@@ -62,4 +66,6 @@ public class Person {
     public String getRole() {
         return "Person";
     }
+
+    public abstract String getDetails();
 }

@@ -2,7 +2,7 @@ package model;
 
 import exceptions.ValidationException;
 
-public class Doctor extends Person {
+public class Doctor extends Person implements Treatable {
     private String specialization;
     private int experienceYears;
 
@@ -51,11 +51,21 @@ public class Doctor extends Person {
                 ", Experience: " + experienceYears + " years";
     }
 
+
     public void treatPatient() {
         System.out.println("Doctor " + name + " treats a patient.");
     }
 
     public boolean isExperienced() {
         return experienceYears >= 5;
+    }
+    @Override
+    public void performTreatment() {
+        System.out.println("Dr. " + name + " is performing medical treatment.");
+    }
+
+    @Override
+    public String getTreatmentDetails() {
+        return "Treatment by " + name + " (" + specialization + ")";
     }
 }

@@ -132,20 +132,17 @@ public class PersonDAO {
 
     // 6. UPDATE PATIENT
     public boolean updatePatient(Patient patient) {
-        String sql = "UPDATE person SET name = ?, age = ?, phone = ?, " +
-                "diagnosis = ?, admitted = ? " +
-                "WHERE id = ? AND person_type = 'PATIENT'";
-
+        String sql = "UPDATE Patient SET name = ?, age = ?, phone = ?, diagnosis = ?, admitted = ?" + "WHERE id = ? AND person_type = 'PATIENT'";
         Connection connection = DatabaseConnection.getConnection();
         if (connection == null) return false;
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, patient.getName());
             statement.setInt(2, patient.getAge());
             statement.setString(3, patient.getPhone());
             statement.setString(4, patient.getDiagnosis());
             statement.setBoolean(5, patient.isAdmitted());
-            statement.setInt(6, patient.getId());
+            statement.setInt(6,patient.getId());
 
             int rowsUpdated = statement.executeUpdate();
             return rowsUpdated > 0;
@@ -155,8 +152,9 @@ public class PersonDAO {
         } finally {
             DatabaseConnection.closeConnection(connection);
         }
-    }
 
+
+    }
     // 7. DELETE PERSON
     public boolean deletePerson(int id) {
         String sql = "DELETE FROM person WHERE id = ?";

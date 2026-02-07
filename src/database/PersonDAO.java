@@ -34,27 +34,20 @@ public class PersonDAO {
     }
 
     // 2. INSERT PATIENT
-    public boolean insertPatient(Patient patient) {
-        String sql = "INSERT INTO person (name, age, phone, person_type, diagnosis, admitted) " +
-                "VALUES (?, ?, ?, 'PATIENT', ?, ?)";
-
+    public boolean insertPatient(Patient patient){
+        String sql = "INSERT INTO Patient VALUES (?, ?, ?, ?,'PATIENT', ?, ?)";
         Connection connection = DatabaseConnection.getConnection();
         if (connection == null) return false;
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, patient.getName());
-            statement.setInt(2, patient.getAge());
+        try(PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(1, patient.getId());
+            statement.setString(2, patient.getName());
+            statement.setInt(3, patient.getAge());
             statement.setString(3, patient.getPhone());
-            statement.setString(4, patient.getDiagnosis());
-            statement.setBoolean(5, patient.isAdmitted());
+            statement.setString(4, patient.getName());
+            statement.setString(5, patient.getName());
 
-            int rowsInserted = statement.executeUpdate();
-            return rowsInserted > 0;
-        } catch (SQLException e) {
-            System.out.println("Error inserting patient: " + e.getMessage());
-            return false;
-        } finally {
-            DatabaseConnection.closeConnection(connection);
+
         }
     }
 
@@ -156,21 +149,17 @@ public class PersonDAO {
 
     }
     // 7. DELETE PERSON
-    public boolean deletePerson(int id) {
+    public boolean deletePerson(int id){
         String sql = "DELETE FROM person WHERE id = ?";
         Connection connection = DatabaseConnection.getConnection();
         if (connection == null) return false;
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            int rowsDeleted = statement.executeUpdate();
-            return rowsDeleted > 0;
-        } catch (SQLException e) {
-            System.out.println("Error deleting person: " + e.getMessage());
-            return false;
-        } finally {
-            DatabaseConnection.closeConnection(connection);
+        try(PreparedStatement statement = connection.prepareStatement(sql)){
+         statement.setInt(1,getPersonById());
         }
+        int rowsDeleted = statement.executeUpdate();
+        return rowsUpdated > 0;
+
     }
 
     // 8. SEARCH BY NAME (ILIKE)
